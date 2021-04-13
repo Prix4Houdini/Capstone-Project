@@ -1,3 +1,5 @@
 # Capstone-Project
 
-To run : guile file_name input_file_name module_name
+To run module extractor: 
+`guile module-extractor.scm <verilog_input_file_name> <module_name>`
+
