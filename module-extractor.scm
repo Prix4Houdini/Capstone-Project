@@ -25,8 +25,20 @@
  
 ;;; implementation of lazy evaluation for regex matching
 (define (regex-lazy-eval pattern source-text)
-  ;; call regex-iter
-  (regex-iter pattern source-text source-text)
+  
+  ;;PROCEDURE
+  (let ( (temp-string (match-regex pattern source-text)))
+    (if (string= "" temp-string)
+	"" ; if module does not exist, return empty string
+	(regex-iter pattern temp-string "") ; else call regex-iter
+	)
+    )
+  )
+
+;; proceedure to match regex with text
+(define (match-regex pattern t-string)
+  (define match-list (map match:substring (list-matches pattern t-string)))
+  (if (= (length match-list) 0) "" (list-ref match-list 0))
   )
 
 
@@ -38,11 +50,6 @@
     (define new_len (- (string-length matched-text) 9))
     (substring matched-text 0 new_len)
     )
-  ;; proceedure to match regex with text
-  (define (match-regex t-string)
-    (define match-list (map match:substring (list-matches pattern t-string)))
-    (if (= (length match-list) 0) "" (list-ref match-list 0))
-    )
 
   ;; PROCEEDURE
   ;; if matched-text is an empty string
@@ -50,7 +57,7 @@
       initial-text   ; if condition is true - termination condition
       
       ;; else call regex-iter once again
-      (let ( (temp-string (match-regex (remove-endmodule))))
+      (let ( (temp-string (match-regex pattern (remove-endmodule))))
 	(regex-iter pattern temp-string matched-text) ; call regex-iter tail-recursively
       ))
   )
