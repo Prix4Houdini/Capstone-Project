@@ -3,6 +3,7 @@
 
 (use-modules (ice-9 textual-ports))
 (use-modules (ice-9 regex))
+;;(use-modules (comment-reducer))
 
 (define (file-read)
   (let ( (verilog-file (list-ref (command-line) 1)) ) ; read verilog filename from command line arg
@@ -30,9 +31,11 @@
   (let ( (temp-string (match-regex pattern source-text)))
     (if (string= "" temp-string)
 	"" ; if module does not exist, return empty string
-	(regex-iter pattern temp-string "") ; else call regex-iter
-	)
-    )
+	(let* ( (intermediate-output (string-match "endmodule" temp-string))
+		(last-index (match:end intermediate-output))
+		)
+	  (substring temp-string 0 last-index))
+	))
   )
 
 ;; proceedure to match regex with text
@@ -42,34 +45,11 @@
   )
 
 
-;;; core tail-recursive function of regex lazy evaluation
-(define (regex-iter pattern matched-text initial-text)
-  ;; DEFINITIONS OF LOCAL PROCEEDURES
-  ;; removes the characters 'endmodule' from the end of the text using indices to slice the string
-  (define (remove-endmodule)
-    (define new_len (- (string-length matched-text) 9))
-    (substring matched-text 0 new_len)
-    )
-
-  ;; PROCEEDURE
-  ;; if matched-text is an empty string
-  (if (string= "" matched-text)
-      initial-text   ; if condition is true - termination condition
-      
-      ;; else call regex-iter once again
-      (let ( (temp-string (match-regex pattern (remove-endmodule))))
-	(regex-iter pattern temp-string matched-text) ; call regex-iter tail-recursively
-      ))
-  )
-
-
 ;; MAIN 
 (define text (file-read))
 (define r-pat (regex-pattern-maker))
 (define ext-module (regex-lazy-eval r-pat text))
 (display ext-module)
-
-
 
 (newline)
 
