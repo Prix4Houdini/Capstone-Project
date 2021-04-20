@@ -57,3 +57,5 @@
   )
        
       
+;;Need to create wrapper procedure. Execute as:
+;;(define temp (remove-comments-iter "" text 0))
