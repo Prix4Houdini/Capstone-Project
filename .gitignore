@@ -1,4 +1,6 @@
 #do not consider temporary emacs files
 *~
 *#
+tests/__pycache__/*
+src/__pychache__/*
 
