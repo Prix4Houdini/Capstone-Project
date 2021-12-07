@@ -1,5 +1,5 @@
 # unit test for constituent_gates.py
-from src.start import constituent_gates
+from src.tree_support import constituent_gates
 import pytest
 
 # exception handling

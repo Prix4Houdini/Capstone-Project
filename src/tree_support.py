@@ -1,21 +1,6 @@
 # start.py
 from math import prod
 
-def num_of_intermediate_wires(n : int) -> int:
-    '''calculates the number of intermediate wires'''
-    #invalid input
-    if type(n) is not int:
-        raise TypeError("only integer inputs are accepted.")
-    elif(n <= 1): 
-        raise ValueError("input cannot be less than or equal to one.")
-    #valid input
-    a = 0
-    while(n != 0):
-        a += n&1    # determining if the LSB is 1
-        n = n>>1        # left shifting to examine next bit
-
-    return a
-
 def is_odd(n : int) -> bool:
     '''returns True upon a positive odd number, False otherwise'''
     #invalid input
@@ -23,7 +8,6 @@ def is_odd(n : int) -> bool:
         raise TypeError("only integer inputs are accepted.")
     elif(n < 0): 
         raise ValueError("input cannot be less than zero.")
-    
     return (True if n & 1 else False)
 
 def constituent_gates(n : int) -> list:
@@ -43,8 +27,6 @@ def constituent_gates(n : int) -> list:
                     # value of bit being examined
         n = n>>1        # left shift to examine next bit
     return l
-
-#def if_divide_largest_gate(l : list):
 
 def divide_largest_gate(l : list) -> (list):   
     '''chooses to divide largest gate into constituent gates when necessary'''

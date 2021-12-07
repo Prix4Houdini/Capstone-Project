@@ -1,7 +1,7 @@
 # unit tests for divide_largest_gate.py
 from math import exp
 import pytest
-from src.start import divide_largest_gate
+from src.tree_support import divide_largest_gate
 
 # testcase 1 = []  
 # testcase 2 = [1]
