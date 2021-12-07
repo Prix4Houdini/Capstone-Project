@@ -1,5 +1,3 @@
-//boothsfinal.v
-//16 bit booth multiplier
 module eight_bit_adder_subractor(
     input wire cin,
     input wire [7:0] i0,i1,
@@ -69,9 +67,8 @@ module booth_substep(
                 next_acc[7] = 1;
 		end
 
-endmodule 
+endmodule
 
- 
 module booth_multiplier(
     input signed[7:0] multiplier, multiplicand,
     output signed [15:0] product);
@@ -94,7 +91,4 @@ module booth_multiplier(
 	
 	 
 endmodule
-
-tree(or2, 2, myor2, 15);
-tree(or3, 3, myor3, 15);
 
