@@ -1,6 +1,4 @@
-import sys
 import re
-
 
 
 def module_extractor(input_string):
@@ -16,13 +14,21 @@ def module_extractor(input_string):
 
     return final_module_definitions
 
-def tree_extractor(input_string):
+
+def tree_detector(input_string):
     tree_detection = re.findall("tree\(.*\);", input_string)
     return tree_detection
 
 
+def tree_argument(definition):
+    temp = definition[5:-2]
+    t1 = temp.split(',')
+    for i in range(len(t1)):
+        t1[i] = t1[i].strip()
+    return t1
+
 def module_output(final_module_definitions, file_output):
-    opener = open(file_output, 'w')
+    opener = open(file_output, 'a')
     for module in final_module_definitions:
         opener.write(module + '\n\n')
     opener.close()
