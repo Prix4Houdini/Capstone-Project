@@ -1,19 +1,24 @@
 # tree_stages.py
-import src.tree_support
+from typing import Tuple, List
+
+import tree_support
+
 
 # TODO: unit testing
 def construct_module_declaration(
     subsequent_module_name: str,
     subsequent_module_number_of_input: int,
+    optional_argument_string: str = '',
     ) -> str:
     '''Declares the module with its name and appropriate number of input and 
     output wires'''
     # constructing parts of the new module definition
     # TODO: figure out how seletion wires would increase - I think increment with 
     # each recursion
-    module_declaration = '{a} (input wire a[{b}:0], ..., output wire y);'.format(
+    module_declaration = '{a} (input wire a[{b}:0], {c}, output wire y);'.format(
         a = subsequent_module_name,
         b = subsequent_module_number_of_input - 1,
+        c = optional_argument_string,
     )
 
     return module_declaration
@@ -26,24 +31,29 @@ def declare_temp_wires(n: int) -> str:
     return wire_declaration
 
 # TODO: unit testing
-def instantiate_modules(base_module_name: str, n: list) -> str:
+def instantiate_modules(base_module_name: str, n: list) -> Tuple[str, List[str]]:
     '''Returns string instantiating all the modules that combine sections of inputs.'''
     res_str = '\n\t// Module definition\n'
+    module_list = []
     ctr = 0
 
     # Module definition for the first n-1 statements.
     for i in range(len(n)-1):
-        s = '\t{bm}_{ele} {bm}_{ele}_{j}(a[{c_plus}:{c}], temp[{j}]);\n'.format(
-            bm = base_module_name,
-            ele = n[i],
+        # constructs module name string
+        module_name = s = '{bm}_{ele}'.format(bm = base_module_name, ele = n[i])
+
+        # constructs module instantiation string
+        s = '\t{mod_name} {mod_name}_{j}(a[{c_plus}:{c}], temp[{j}]);\n'.format(
+            mod_name = module_name,
             j = i,
             c = ctr,
             c_plus = ctr + n[i] - 1,
         )
-        ctr += n[i]
+        # effects
+        ctr += n[i] 
+        # outputs
         res_str+=s
-
-    # print(n[-1])
+        module_list.append(module_name)
 
     # 2^n + 1 case or 2^n + 2^m + ... + 1 case
     if(n[-1] == 1):
@@ -51,17 +61,22 @@ def instantiate_modules(base_module_name: str, n: list) -> str:
             j = len(n)-1,
             k = ctr,
         )
+        module_list.append('')
     # 2^n case or 2^n + 2^m ... case
     else:
-        s = '\t{bm}_{ele} {bm}_{ele}_{j}(a[{c_plus}:{c}], temp[{j}]);\n'.format(
-            bm = base_module_name,
-            ele = n[i],
+        module_name = s = '{bm}_{ele}'.format(bm = base_module_name, ele = n[i])
+        # constructs module instantiation string
+        s = '\t{mod_name} {mod_name}_{j}(a[{c_plus}:{c}], temp[{j}]);\n'.format(
+            mod_name = module_name,
             j = i,
             c = ctr,
             c_plus = ctr + n[i] - 1,
         )
+        # outputs
+        res_str+=s
+        module_list.append(module_name)
     
-    return res_str
+    return (res_str, module_list)
 
 # TODO: unit testing
 def instantiate_combiner(base_module_name: str, n: list) -> str:
@@ -101,16 +116,24 @@ def tree_constructor_iter(base_module_name = 'or2',
         output_module_name, 
         output_module_number_of_input)
     temp_wires_declaration = declare_temp_wires(num_of_temp_wires)
-    module_instantiations = instantiate_modules(base_module_name, list_of_gates)
+    module_instantiations_str, module_instantiation_list = instantiate_modules(base_module_name, list_of_gates)
     combiner_logic = instantiate_combiner(base_module_name, list_of_gates)   
-    
 
-    print(module_definition)
-    print(temp_wires_declaration)
-    print(module_instantiations)
-    print(combiner_logic)
+    # print(module_definition)
+    # print(temp_wires_declaration)
+    # print(module_instantiations)
+    # print(combiner_logic)
     
+    res_str =   module_definition   \
+                + temp_wires_declaration    \
+                + module_instantiations_str \
+                + combiner_logic
 
+    return (res_str, list_of_gates, module_instantiation_list)
+    
 if __name__ == '__main__':
     # print('hello world')
-    tree_constructor_iter()
+    a = tree_constructor_iter()
+    print(a[0])
+    print(a[1])
+    print(a[2])
