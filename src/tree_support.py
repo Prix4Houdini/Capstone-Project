@@ -1,5 +1,4 @@
 # start.py
-from math import prod
 
 def is_odd(n : int) -> bool:
     '''returns True upon a positive odd number, False otherwise'''
