@@ -9,20 +9,26 @@ output_file = sys.argv[1] + 'ba'
 temp1 = []
 temp2 = []
 file_content = input_file.read()
-default_definitions = module_extractor(file_content)
+default_definitions, lamar = module_extractor(file_content)
 #module_output(default_definitions, output_file)
 tree_declarations = tree_detector(file_content)
 for define in tree_declarations:
     tree_args = tree_argument(define)
     if len(tree_args) == 3:
-        tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
+        if tree_args[0] not in lamar:
+            raise Exception(tree_args[0] + "module not found in the definitions")
+        else:
+            tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
     elif len(tree_args) == 4:
-        sel_tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
+        if tree_args[0] not in lamar:
+            raise Exception(tree_args[0] + "module not found in the definitions")
+        else:
+            sel_tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
 
 result_set = final_tree()
 if result_set:
     pass
-    #module_output(result_set, output_file)
+    module_output(result_set, output_file)
 result_set_sel = sel_final_tree()
 if result_set_sel:
     pass
@@ -39,7 +45,7 @@ for define in curryChain_declarations:
         curr = currychain_state(file_content, chainArgs[0], chainArgs[1], int(chainArgs[2]), int(chainArgs[3]))
         temp1.append(curr)
 
-# module_output(temp1, output_file)
+#module_output(temp1, output_file)
 
 
 propChain_declaration = propogation_detector(file_content)
@@ -52,5 +58,5 @@ for define in propChain_declaration:
         curr = propChain_state(file_content, chainArgs[0], chainArgs[1], int(chainArgs[2]), int(chainArgs[3]))
         temp2.append(curr)
 
-module_output(temp2, output_file)
+#module_output(temp2, output_file)
 

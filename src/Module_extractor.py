@@ -12,7 +12,7 @@ def module_extractor(input_string):
         pattern_search = re.search(f"module\s{module_name}\(((?!endmodule).|\s)*endmodule", input_string)
         final_module_definitions.append(input_string[pattern_search.start():pattern_search.end()])
 
-    return final_module_definitions
+    return final_module_definitions, l
 
 
 def tree_detector(input_string):
