@@ -12,10 +12,19 @@ module_output(default_definitions, output_file)
 tree_declarations = tree_detector(file_content)
 for define in tree_declarations:
     tree_args = tree_argument(define)
-    tree_state(tree_args[0], tree_args[2], int(tree_args[3]))
+    if len(tree_args) == 3:
+        tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
+    elif len(tree_args) == 4:
+        sel_tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
 
 result_set = final_tree()
-module_output(result_set, output_file)
+if result_set:
+    module_output(result_set, output_file)
+result_set_sel = sel_final_tree()
+if result_set_sel:
+    module_output(result_set_sel, output_file)
+
+
 #
 # file = open("out.v", 'w')
 # for string in result_set:

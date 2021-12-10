@@ -27,6 +27,7 @@ def tree_argument(definition):
         t1[i] = t1[i].strip()
     return t1
 
+
 def module_output(final_module_definitions, file_output):
     opener = open(file_output, 'a')
     for module in final_module_definitions:

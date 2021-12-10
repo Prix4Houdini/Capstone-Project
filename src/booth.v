@@ -95,6 +95,6 @@ module booth_multiplier(
 	 
 endmodule
 
-tree(or2, 2, myor15, 15);
-tree(or2, 2, myor32, 32);
+tree(or2, myor15, 15);
+tree(mux2, mymux32, 32, sel=True);
 

@@ -115,8 +115,8 @@ def sel_tree_constructor_iter(base_module_name,
         )
     temp_wires_declaration = sel_declare_temp_wires()
     module_instantiations_str, module_instantiation_list = sel_instantiate_modules(base_module_name, list_of_gates, num_select_lines)
-    combiner_logic = sel_instantiate_combiner(base_module_name, list_of_gates, num_select_lines)   
-
+    combiner_logic = sel_instantiate_combiner(base_module_name, list_of_gates, num_select_lines)
+    endmodule_token = 'endmodule\n'
     # print(module_definition)
     # print(temp_wires_declaration)
     # print(module_instantiations_str)
@@ -126,7 +126,8 @@ def sel_tree_constructor_iter(base_module_name,
     res_str =   module_definition   \
                 + temp_wires_declaration    \
                 + module_instantiations_str \
-                + combiner_logic
+                + combiner_logic \
+                + endmodule_token
 
     return (res_str, list_of_gates, module_instantiation_list)
     
