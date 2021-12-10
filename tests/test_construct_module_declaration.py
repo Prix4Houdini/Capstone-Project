@@ -1,6 +1,6 @@
 # unit test cases for module declaration
 import pytest
-from src.tree_stages import construct_module_declaration
+from tree_stages_optional import construct_module_declaration
 
 # type error
     # test a: subsequent_module_name not string

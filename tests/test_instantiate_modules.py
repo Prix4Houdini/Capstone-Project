@@ -340,7 +340,7 @@ def test_case_9a():
     expected_str = '\n\t// Module definition\n' \
         + '\tmux2_8 mux2_8_0(a[7:0], s[3:1], temp[0]);\n' \
         + '\tmux2_4 mux2_4_1(a[11:8], s[3:2], temp[1]);\n' \
-        + '\tmux2_2 mux2_2_2(a[13:12], s[3], temp[2]);\n' \
+        + '\tmux2_2 mux2z_2_2(a[13:12], s[3], temp[2]);\n' \
         + '\tassign temp[3] = a[14];\n' \
 
     # act

@@ -1,6 +1,6 @@
 # unit tests for delcare_temp_wires
 import pytest
-from src.tree_stages import declare_temp_wires
+from tree_stages_optional import declare_temp_wires
 
 # exception handling
 type_error_msg = 'declare_temp_wires: only integers are accepted.'
