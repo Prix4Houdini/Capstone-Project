@@ -1,4 +1,5 @@
 # start.py
+from math import log2
 
 def is_odd(n : int) -> bool:
     '''returns True upon a positive odd number, False otherwise'''
@@ -45,3 +46,11 @@ def divide_largest_gate(l : list) -> (list):
             else:
                 l.append(a)
     return l
+
+def binary_breakdown(n):
+    if(n & n-1 == 0):   # is a power of 2
+        gate1 = gate2 = int(n/2)
+    else:
+        gate1 = 2 ** int(log2(n))
+        gate2 = n - gate1
+    return [gate1, gate2]
