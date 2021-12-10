@@ -15,12 +15,12 @@ tree_declarations = tree_detector(file_content)
 for define in tree_declarations:
     tree_args = tree_argument(define)
     if len(tree_args) == 3:
-        if tree_args[0] not in lamar:
+        if (tree_args[0] + "_2") not in lamar:
             raise Exception(tree_args[0] + "module not found in the definitions")
         else:
             tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
     elif len(tree_args) == 4:
-        if tree_args[0] not in lamar:
+        if (tree_args[0] + "_2") not in lamar:
             raise Exception(tree_args[0] + "module not found in the definitions")
         else:
             sel_tree_state(tree_args[0], tree_args[1], int(tree_args[2]))
