@@ -10,7 +10,7 @@ temp1 = []
 temp2 = []
 file_content = input_file.read()
 default_definitions, lamar = module_extractor(file_content)
-#module_output(default_definitions, output_file)
+module_output(default_definitions, output_file)
 tree_declarations = tree_detector(file_content)
 for define in tree_declarations:
     tree_args = tree_argument(define)
@@ -27,12 +27,11 @@ for define in tree_declarations:
 
 result_set = final_tree()
 if result_set:
-    pass
     module_output(result_set, output_file)
 result_set_sel = sel_final_tree()
+
 if result_set_sel:
-    pass
-    #module_output(result_set_sel, output_file)
+    module_output(result_set_sel, output_file)
 
 curryChain_declarations = currychain_detector(file_content)
 
@@ -45,7 +44,7 @@ for define in curryChain_declarations:
         curr = currychain_state(file_content, chainArgs[0], chainArgs[1], int(chainArgs[2]), int(chainArgs[3]))
         temp1.append(curr)
 
-#module_output(temp1, output_file)
+module_output(temp1, output_file)
 
 
 propChain_declaration = propogation_detector(file_content)
@@ -58,5 +57,5 @@ for define in propChain_declaration:
         curr = propChain_state(file_content, chainArgs[0], chainArgs[1], int(chainArgs[2]), int(chainArgs[3]))
         temp2.append(curr)
 
-#module_output(temp2, output_file)
+module_output(temp2, output_file)
 
