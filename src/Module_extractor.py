@@ -28,6 +28,30 @@ def tree_argument(definition):
     return t1
 
 
+def currychain_detector(input_string):
+    currychain_detection = re.findall("curryingChain\(.*\);", input_string)
+    return currychain_detection
+
+
+def propogation_detector(input_string):
+    currychain_detection = re.findall("propogationChain\(.*\);", input_string)
+    return currychain_detection
+
+def currychain_argument(definition):
+    temp = definition[14:-2]
+    t1 = temp.split(',')
+    for i in range(len(t1)):
+        t1[i] = t1[i].strip()
+    return t1
+
+def propchain_argument(definition):
+    temp = definition[17:-2]
+    t1 = temp.split(',')
+    for i in range(len(t1)):
+        t1[i] = t1[i].strip()
+    return t1
+
+
 def module_output(final_module_definitions, file_output):
     opener = open(file_output, 'a')
     for module in final_module_definitions:

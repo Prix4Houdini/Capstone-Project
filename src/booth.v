@@ -95,6 +95,42 @@ module booth_multiplier(
 	 
 endmodule
 
+module m41(input wire a, b, c, d, s0, s1, output wire y);
+
+output out;
+input a, b, c, d, s0, s1;
+wire sobar, s1bar, T1, T2, T3, T4;
+
+not (s0bar, s0), (s1bar, s1);
+and (T1, a, s0bar, s1bar), (T2, b, s0bar, s1),(T3, c, s0, s1bar), (T4, d, s0, s1);
+or(out, T1, T2, T3, T4);
+
+endmodule
+
+// Code your design : Full Adder
+module fa(a,b,cin,sum,cout);
+  input a,b,cin;
+  output sum,cout;
+  wire x,y,z;
+
+// instantiate building blocks of full adder
+  half_add h1(.a(a),.b(b),.s(x),.c(y));
+  half_add h2(.a(x),.b(cin),.s(sum),.c(z));
+  or o1(cout,y,z);
+endmodule : full_add
+
+// code your half adder design
+module half_add(a,b,s,c);
+  input a,b;
+  output s,c;
+
+// gate level design of half adder
+  xor x1(s,a,b);
+  and a1(c,a,b);
+endmodule :half_add
+
 tree(or2, myor15, 15);
 tree(mux2, mymux32, 32, sel=True);
+curryingChain(m41, 16bitswitch, 4, 16);
+propogationChain(fa, ripplecarryadder16, 2, 8);
 

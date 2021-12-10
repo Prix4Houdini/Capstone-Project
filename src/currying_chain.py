@@ -30,7 +30,7 @@ def instantiate_modules(base_module_name: str,
     return s
 
 def currying_chain_iter(base_module: str, module_name: str, number_of_inputs: int, 
-                        chain_length: int, common_inputs: int):
+                        chain_length: int, common_inputs: str):
     module_declaration_string = construct_module_declaration(module_name, 
                                                              number_of_inputs, 
                                                              chain_length, 

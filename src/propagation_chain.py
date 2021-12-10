@@ -1,7 +1,5 @@
 # propagation_chain.py
 
-from tree_stages import construct_module_declaration
-
 def construct_module_declaration(
     subsequent_module_name: str,
     number_of_input: int,
